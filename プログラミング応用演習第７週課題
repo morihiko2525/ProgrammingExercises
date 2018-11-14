@@ -1,0 +1,93 @@
+// 2018年度 「プログラミング応用演習」第７週課題
+// クラスと配列によるキューの実装
+
+// ?? を含むコメントの部分を適切なプログラムに置き換えて各演習のプログラムを完成させること．
+// プログラムの他の部分は変更しないこと．
+
+
+// マクロ変数IDに各自の学生番号，NAMEに氏名を文字列として定義すること．
+//  例
+//  #define ID "17A5000"
+//  #define NAME "工大次郎"
+
+#define ID "17A5000"
+#define NAME "工大次郎"
+
+#include <iostream>
+#include <stdio.h>
+
+#define N 3
+
+class Queue {
+private:
+	int Q[N];
+	int counter;
+public:
+	void init() {
+		for (int i = 0; i < N; i++) Q[i] = -1;
+		counter = 0;
+	} // end init
+
+	// enqueue
+	int enqueue(int x) {
+		if (counter > (N - 1)) {
+			printf("overflow \n");
+			return -1;
+		}
+		Q[counter] = x;
+		counter++;
+		return 0;
+	}
+
+	// dequeue
+	int dequeue() {
+		int i, cc;
+		cc = Q[0];
+		if (counter <= 0) {
+			printf("underflow \n");
+			return -1;
+		}
+		for (i = 1; i < counter; i++) {
+			Q[i - 1] = Q[i];
+		}
+		Q[i - 1] = -1;
+
+		counter--;
+		return cc;
+	}
+
+	void print() { // print_queue() に相当
+		int i;
+
+		if (counter == 0) printf("empty \n");
+		for (i = 0; i < counter; i++) {
+			printf("Q[%d] = %d \n", i, Q[i]);
+		}
+	} /* print */
+}; // end of class Queue
+//----------------------------------------------
+int main() {
+	int x;
+	int cc;
+	Queue queue;
+
+	queue.init();
+
+	cc = queue.enqueue(10);
+	cc = queue.enqueue(20);
+	cc = queue.enqueue(30);
+	queue.print();
+	cc = queue.enqueue(40); //overflow
+	cc = queue.dequeue();
+	queue.print();
+	queue.dequeue();
+	queue.dequeue();
+	queue.dequeue();// underflow
+	//cc = queue.enqueue(40);
+	queue.print();
+
+	printf("\nPAE_2017_07_HW: %s, %s\n", ID, NAME);
+
+	return 0;
+}// end of main
+// end of file
