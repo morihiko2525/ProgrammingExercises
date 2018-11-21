@@ -1,0 +1,89 @@
+// 2017年度　「プログラミング応用演習」第８週課題
+// 図形の円を表すクラス
+
+// ?? を含むコメントの部分をを適切なプログラムに置き換えて各演習のプログラムを完成させること．
+// プログラムの他の部分は変更しないこと．
+
+
+// マクロ変数IDに各自の学生番号，NAMEに氏名を文字列として定義すること．
+//  例
+//  #define ID "17A5999"
+//  #define NAME "工大次郎"
+
+#define ID "17A5999"
+#define NAME "工大次郎"
+
+#include <stdio.h>
+
+//----------------------------------------------------------------------
+class Circle {
+private:
+    double x, y, r;
+public:
+    Circle() {
+        x = 0.0;
+        y = 0.0;
+        r = 1.0;
+    }
+    Circle(double dx, double dy, double dr) {
+        x = dx;
+        y = dy;
+        r = dr;
+    }
+    void move(double dx, double dy) {
+        x += dx;
+        y += dy;
+    } // end move
+    void move_to(double dx, double dy) {
+        x = dx;
+        y = dy;
+    } // end of move_to
+    void enlarge(double m) {
+        r = r * m;
+    } // end of enlarge
+    void print() {
+        printf("(%4.1f, %4.1f) <%4.1f>\n", this->x, this->y, this->r);
+    } // end of print
+}; // end of class Circlee
+   //----------------------------------------------------------------------
+int main() {
+
+    Circle c1;
+    Circle c2 = Circle{ 1.0, 2.0, 3.0 };
+    Circle *cp1, cp2; /??/ // cp1, cp2の定義
+
+    c1.print();        // c1のメンバ変数を表示（メンバ関数printの呼び出し）
+    c2.print();        // c2のメンバ変数を表示（メンバ関数printの呼び出し）
+
+    cp1 = new Circle();
+    cp1->print();
+
+    cp2 = new Circle(10.0, 20.0, 30.0);
+    cp2->print();
+
+    cp1->move(5.0, 10.0);        // cp1が示す円をx方向に5, y方向に10移動させる
+    cp1->print();
+
+    cp2->move_to(30.0, 20.0);    // cp2が示す円の中心を(30.0, 20.0)に移動させる．
+    cp2->print();
+
+    c2.enlarge(2.0); // c2が示す円の半径を2倍にする
+    c2.print();
+
+    printf("\nPAE_2018_08_HW: %s, %s\n", ID, NAME);
+
+    return 0;
+} // end of main
+
+  //=========================================================
+  / 共同作業者（教えた場合も含む）がいれば，以下にコメントとして学生番号と氏名を示すこと．
+
+
+
+  /
+  //=========================================================
+  /  教員へのコメント欄（もしあれば）
+
+
+
+  */
