@@ -1,0 +1,176 @@
+// ２０１８年度 プログラミング応用 第１０週課題
+
+// /*??*/の部分，//??　を含む行，を適切なプログラムで置き換える．
+
+// （１）継承を用いてクラスを新たなクラスを定義
+
+// ??を含む行を適切なプログラムで置き換えることで，
+// 以下のプログラムを完成させること．
+
+// マクロ変数IDに学生番号，NAMEに氏名を文字列として定義すること．
+// 以下の２行の<と>で囲まれた部分（<と>を含む）を置き換える
+// 例
+// #define ID   "17A5000"
+// #define NAME "工大太郎"
+
+#define ID   "17A0000"
+#define NAME "PlayerUnknown"
+
+#include <stdio.h>
+#define OK 0
+#define UNDERFLOW -1
+#define OVERFLOW -2
+#define N 3
+
+//==========================================
+class stack {
+	// ?? サブクラスで利用可能なメンバ変数の定義
+public:
+	int top;
+	int sdata[N];
+public:
+	stack() { this->top = 0; } // constructor
+
+
+  //-----------------------------------------
+	int push(int d) {
+		if (this->top >= N) goto ERR; // オーバフローのチェック
+
+		sdata[this->top] = d;// データの格納
+		this->top += 1;// データ格納位置の更新
+
+		printf("%d: pushed\n", d);  // 動作確認用
+		return OK;
+	ERR:
+		printf("Error: overflow\n");
+		return OVERFLOW;
+	} // end of push
+  //-----------------------------------------
+	int pop(int *d) {
+		if (this->top <= 0) goto ERR;  // アンダーフローのチェック
+
+		this->top -= 1; //?? データ格納位置の更新
+		*d = this->sdata[this->top]; //?? データの取り出し
+
+		printf("%d: popped\n", *d); // 動作確認用
+		return OK;
+	ERR:
+		printf("Error: underflow\n");
+		return UNDERFLOW;
+	} // end of pop
+  //-----------------------------------------
+	void show() {
+		int i;
+
+		printf("Stack: ");
+		for (i = 0; i < this->top; i++)
+			printf("%d ", this->sdata[i]); // データの表示
+		printf("\n");
+
+	} // end of show
+};// end stack
+//========================================
+class stack2 : public stack {
+public:
+	// ?? 関数topdataの定義．stackのメンバ変数に対する処理．
+	int topdata(int *d) {
+		if (this->top <= 0) goto ERR;
+
+		*d = this->sdata[this->top - 1];
+		return OK;
+
+	ERR:
+		printf("Error: underflow\n");
+		return UNDERFLOW;
+	}
+
+};
+//========================================
+void ex10_1() {
+	int cc;
+	int d;
+
+	stack2 st;
+  
+	printf("<<ex10_1>>\n\n");
+
+	cc = st.pop(&d);
+	cc = st.push(11);
+	cc = st.push(22);
+	cc = st.push(33);
+	st.show();
+	cc = st.push(44);
+	st.topdata(&d);
+	printf("top = %d\n", d);
+	cc = st.pop(&d);
+	st.show();
+
+} //end of ex10_1
+
+//#######################################################
+//(2) 抽象クラスと多相性
+
+//----------
+class animal {
+	// ?? 関数cryの定義
+public:
+	virtual void cry() {};
+};
+//----------
+class cat :public animal {
+	// ??  関数cryの定義
+public:
+	void cry()
+	{
+		printf("mewmew\n");
+	};
+}; // end cat
+//----------
+class dog : public animal {
+	// ??  関数cryの定義
+	virtual void cry()
+	{
+		printf("bowbow");
+	};
+}; // end dog
+//-------------------------------------
+void ex10_2() {
+	animal *ap;
+	cat *cp;
+	dog *dp;
+
+	printf("\n\n<<ex10_2>>\n\n");
+
+	cp = new cat();
+	dp = new dog();
+	ap = (animal *)cp;
+	ap->cry();
+	ap = (animal *)dp;
+	ap->cry();
+}  // end of ex10_2
+//#######################################################
+
+int main() {
+	printf("PAE_2018_10_HW: %s %s\n\n", ID, NAME);
+
+	ex10_1();
+	ex10_2();
+
+	printf("\nPAE_2018_10_HW: %s %s\n\n", ID, NAME);
+	return 0;
+
+} // end of main
+
+//=========================================================
+/* 共同作業者（教えた場合も含む）がいれば，以下にコメントとして学生番号と氏名を示すこと．
+
+
+
+*/
+//=========================================================
+/*  教員へのコメント欄（もしあれば）
+
+
+
+
+*/
