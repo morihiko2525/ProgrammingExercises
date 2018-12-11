@@ -1,0 +1,105 @@
+// ２０１８年度 プログラミング応用 第１１週課題
+
+// /*??*/の部分，//??　を含む行，を適切なプログラムで置き換える．
+
+// マクロ変数IDに学生番号，NAMEに氏名を文字列として定義すること．
+// 以下の２行の<と>で囲まれた部分（<と>を含む）を置き換える
+// 例
+// #define ID   "16A5000"
+// #define NAME "工大太郎"
+
+#define ID   "17A5000"
+#define NAME "PlayerUnknown"
+
+#include <iostream>
+using namespace std;
+
+#define N 3
+template <class T>
+class Queue {
+private:
+	T Q[N];
+	int head;
+	int tail;
+	int counter;
+public:
+	Queue();  // コンストラクタ
+	void enqueue(T x);
+	T dequeue();
+	void show();
+}; // end of class Queue
+//------------------------------
+/*??*/template <class T>
+Queue<T>::Queue() {
+	// メンバ変数の初期設定
+	head = 0/*??*/;
+	tail = 0/*??*/;
+	counter = 0/*??*/;
+}
+//------------------------------
+/*??*/template <class T>
+/*??*/void Queue<T>::enqueue(T x) { // メンバ関数enqueueのシグナチャ
+	if (counter >= N) throw "overflow";/*??*/ // 例外 "overflow" 
+
+	Q[tail] = x;
+	tail = (tail + 1) % N;
+	counter += 1;
+} // end of enqueue
+//------------------------------
+/*??*/template <class T>
+/*??*/T Queue<T>::dequeue(){ // メンバ関数dequeueのシグナチャ
+	T x;
+	if (counter <= 0) throw "underflow"; // 例外"underflow" ";
+	x = Q[head]; /*??*/
+	head = (head + 1) % N;
+	counter -= 1; /*??*/
+	return x; /*??*/
+} // end of dequeue
+//------------------------------
+/*??*/template <class T>
+/*??*/ void Queue<T>::show(){ // メンバ関数showのシグナチャ
+	int i;
+
+	cout << "Q: ";
+	for (i = 0; i < counter; i++) {
+		std::cout << Q[(head + i) % N] << " ";
+	}
+	cout << endl;
+} // end of show
+//------------------------------
+int main() {
+	int x;
+
+	Queue<int> queue1;
+	Queue<double> queue2;
+
+	cout << "PAE_2017_11_HW: " << ID ", " << NAME << endl;
+	/*??*/try { // 例外発生に対応する処理
+		//x = queue1.dequeue();
+		queue1.enqueue(10);  queue1.show();
+		queue1.enqueue(20);  queue1.show();
+		queue1.enqueue(30);  queue1.show();
+		//queue1.enqueue(40);  queue1.show();
+
+		queue2.enqueue(11.1);  queue2.show();
+		x = queue2.dequeue();
+		return 0;
+	}
+	/*??*/ catch (char* msg) { // 例外発生時の処理
+		cout << "Err: " << msg << endl;
+		return -1;
+	}
+}// end of main
+
+//=========================================================
+/* 共同作業者（教えた場合も含む）がいれば，以下にコメントとして学生番号と氏名を示すこと．
+
+
+
+*/
+//=========================================================
+/*  教員へのコメント欄（もしあれば）
+
+
+
+*/
